@@ -17,10 +17,10 @@ import java.util.List;
 
 public class MongoImport {
     public static void main(String[] args) throws IOException {
-        com.mongodb.client.MongoClient client = MongoClients.create("mongodb://root:root@localhost:27017");
+        com.mongodb.client.MongoClient client = MongoClients.create("CONNECTION_STRING");
 
-        MongoDatabase db = client.getDatabase("tweets");
-        MongoCollection<org.bson.Document> coll = db.getCollection("tweets");
+        MongoDatabase db = client.getDatabase("DATABASE_NAME");
+        MongoCollection<org.bson.Document> coll = db.getCollection("COLLECTION_NAME");
 
         try {
             // drop previous import
@@ -31,7 +31,7 @@ public class MongoImport {
             int batch = 0;
             List<InsertOneModel<Document>> docs = new ArrayList<>();
 
-            try (BufferedReader br = new BufferedReader(new FileReader("resources/query2_ref.json"))) {
+            try (BufferedReader br = new BufferedReader(new FileReader("FILENAME_PATH"))) {
                 String line;
                 while ((line = br.readLine()) != null) {
                     docs.add(new InsertOneModel<>(Document.parse(line)));
